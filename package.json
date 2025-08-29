@@ -1,0 +1,27 @@
+{
+  "name": "planshop-diff",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node index.js",
+    "start": "forever start index.js && forever logs 0 -f",
+    "stop": "forever stop index.js",
+    "restart": "forever restart index.js",
+    "plist": "forever list"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@slack/web-api": "^7.9.3",
+    "chalk": "^5.4.1",
+    "forever": "^4.0.3",
+    "playwright": "^1.54.1",
+    "puppeteer": "^24.15.0",
+    "tesseract.js": "^6.0.1"
+  }
+}
