@@ -504,31 +504,31 @@ async function run() {
   isRunning = false;
 }
 
-run().catch(console.error);
+// run().catch(console.error);
 
-// const server = createServer((req, res) => {
-//   const parsedUrl = new URL(req.url, `http://${req.headers.host}`);
-//   const method = req.method;
-//   const pathname = parsedUrl.pathname;
+const server = createServer((req, res) => {
+  const parsedUrl = new URL(req.url, `http://${req.headers.host}`);
+  const method = req.method;
+  const pathname = parsedUrl.pathname;
 
-//   if (method === "GET" && pathname === "/") {
-//     res.writeHead(200, { "Content-Type": "text/plain" });
-//     res.end("Hello, World!");
-//   } else if (method === "GET" && pathname === "/run") {
-//     if (!isRunning) {
-//       isRunning = true;
-//       run().catch(console.error);
-//     }
-//     res.writeHead(200, { "Content-Type": "text/plain" });
-//     res.end("run");
-//   } else {
-//     res.writeHead(404, { "Content-Type": "text/plain" });
-//     res.end("Not Found");
-//   }
-// });
+  if (method === "GET" && pathname === "/") {
+    res.writeHead(200, { "Content-Type": "text/plain" });
+    res.end("Hello, World!");
+  } else if (method === "GET" && pathname === "/run") {
+    if (!isRunning) {
+      isRunning = true;
+      run().catch(console.error);
+    }
+    res.writeHead(200, { "Content-Type": "text/plain" });
+    res.end("run");
+  } else {
+    res.writeHead(404, { "Content-Type": "text/plain" });
+    res.end("Not Found");
+  }
+});
 
-// const PORT = 4000;
+const PORT = 4000;
 
-// server.listen(PORT, () => {
-//   console.log(`Server running at http://localhost:${PORT}/`);
-// });
+server.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}/`);
+});
