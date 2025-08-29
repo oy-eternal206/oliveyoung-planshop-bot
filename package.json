@@ -1,5 +1,5 @@
 {
-  "name": "planshop-diff",
+  "name": "oliveyoung-planshop-bot",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,6 +8,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node index.js",
+    "postinstall": "puppeteer browsers install chrome",
     "start": "forever start index.js && forever logs 0 -f",
     "stop": "forever stop index.js",
     "restart": "forever restart index.js",
