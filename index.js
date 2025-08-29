@@ -1,4 +1,6 @@
 import { createServer } from "node:http";
+import { fileURLToPath } from "url";
+import path from "path";
 import puppeteer from "puppeteer";
 import { createWorker } from "tesseract.js";
 import chalk from "chalk";
@@ -355,12 +357,18 @@ async function getCampaignElement(page, index) {
 }
 
 async function run() {
+  const executablePath = path.resolve(
+    path.dirname(fileURLToPath(import.meta.url)),
+    "puppeteer_cache/chrome/linux-138.0.7204.168/chrome-linux64/chrome"
+  );
+
   const browser = await puppeteer.launch({
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
     headless: true, // 개발 시 headless: false로 설정하여 시각적으로 확인
-    ...(process.env.PUPPETEER_EXECUTABLE_PATH && {
-      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
-    }),
+    // ...(process.env.PUPPETEER_EXECUTABLE_PATH && {
+    //   executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
+    // }),
+    executablePath,
   });
 
   const page = await browser.newPage();

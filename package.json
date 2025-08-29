@@ -8,7 +8,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node index.js",
-    "postinstall": "puppeteer browsers install chrome",
+    "postinstall": "PUPPETEER_CACHE_DIR=./puppeteer_cache puppeteer browsers install chrome",
     "start": "forever start index.js && forever logs 0 -f",
     "stop": "forever stop index.js",
     "restart": "forever restart index.js",
