@@ -6,7 +6,7 @@ import { WebClient } from "@slack/web-api";
 
 const { red, green, yellow } = chalk;
 
-const slackToken = "xoxb-3743410145781-9285627821123-fP7mvZV8r65dOm9Q6aw5vasr"; // Bot Token 환경변수로 관리
+const slackToken = "";
 
 const slackChannelId = "C09DF42PWQY"; // 메시지를 보낼 채널 ID (예: #alerts 채널 ID)
 
@@ -33,7 +33,6 @@ async function terminateOcrWorker() {
 
 async function sendSlackMessage(screenshotBuffer) {
   try {
-    // fs.createReadStream을 사용하여 로컬 파일 스트림 생성
     const result = await slackClient.files.uploadV2({
       channels: slackChannelId,
       initial_comment: "로컬 파일이 업로드되었습니다.",
@@ -182,13 +181,6 @@ async function processCampaignPage(page) {
           videos.forEach((video) => video.pause());
         });
 
-        // 상품 영역 스크린샷 캡쳐
-        // const path = `${__dirname}/screenshot/${currentDataIndex}-${i + 1}.png`;
-        // await goodsLink.screenshot({
-        //   captureBeyondViewport: false,
-        //   path,
-        // });
-
         const screenshotBuffer = await goodsLink.screenshot({
           captureBeyondViewport: false,
         });
@@ -236,18 +228,13 @@ async function processCampaignPage(page) {
                 }일치 (${ocrPrice})`
               )}`
             );
-            // 스크린샷 파일 삭제
-            // fs.unlinkSync(path);
-            // await sendDmToUser("가격 일치!");
           } else {
             console.log(
               `      가격 일치 여부: ${red(
                 `불일치 (OCR: ${ocrPrice}, 상품 상세: ${detailPagePrice})`
               )}`
             );
-            // await sendDmToUser(
-            //   "가격 불일치가 발생했습니다. 확인 부탁드립니다!"
-            // );
+            // sendSlackMessage(screenshotBuffer, text);
           }
         } else {
           console.log(
@@ -259,8 +246,6 @@ async function processCampaignPage(page) {
               })`
             )}`
           );
-          // 스크린샷 파일 삭제
-          // fs.unlinkSync(path);
         }
 
         // 일반적으로 할인율과 최종가를 함께 나타내므로 OCR의 할인율과 가격을 함께 조건으로 확인
@@ -284,7 +269,7 @@ async function processCampaignPage(page) {
                 `불일치 (OCR: ${ocrDiscountRate}, 상품 상세: ${detailPageDiscountRate})`
               )}`
             );
-            sendSlackMessage(screenshotBuffer);
+            // sendSlackMessage(screenshotBuffer, text);
           }
         }
 
@@ -316,10 +301,6 @@ async function processCampaignPage(page) {
         }
       } catch (e) {
         console.error(`      상품 (${i + 1}) 확인 중 오류 발생: ${e.message}`);
-
-        // 스크린샷 파일 삭제
-        // const path = `${__dirname}/screenshot/${currentDataIndex}-${i + 1}.png`;
-        // fs.unlinkSync(path);
 
         // 오류 발생 시에도 다음 상품으로 진행할 수 있도록 뒤로가기 시도 후 다음 루프
         await Promise.all([
