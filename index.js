@@ -355,7 +355,11 @@ async function getCampaignElement(page, index) {
 }
 
 async function run() {
-  const browser = await puppeteer.launch({ headless: true }); // 개발 시 headless: false로 설정하여 시각적으로 확인
+  const browser = await puppeteer.launch({
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    headless: true, // 개발 시 headless: false로 설정하여 시각적으로 확인
+  });
+
   const page = await browser.newPage();
 
   // 성능 최적화 설정
